@@ -1,12 +1,11 @@
 #include <inttypes.h>
 #include <stdbool.h>
 
-void delay(uint32_t ms);
-
 #include "utils.h"
 #include "rcc.h"
 #include "gpio.h"
 #include "systick.h"
+#include "timer.h"
 
 int main(void) {
 
@@ -18,26 +17,14 @@ int main(void) {
 
 	for (;;)
 	{
-		gpio_write(led, ON);
-		delay(1000);
-		gpio_write(led, OFF);
-		delay(1000);
+		uint32_t t, period = 500;
+		if (timer_expired(&t, period, get_systick()))
+		{
+			static bool led_on_off = true;
+			gpio_write(led, led_on_off);
+			led_on_off = !led_on_off;
+		}
 	}
 
 	return 0;
-}
-
-void delay(uint32_t ms)
-{
-	uint32_t until = get_systick() + ms;
-	while (get_systick() < until) (void) 0;
-}
-
-bool timer_expired(uint32_t *expiration, uint32_t period, uint32_t now)
-{
-	if (now + period < *expiration) *expiration = 0;
-	if (*expiration == 0) *expiration = now + period;
-	if (*expiration > now) return false;
-	*expiration = ((now - *expiration) > period) ? now + period : *expiration + period;
-	return true;
 }
