@@ -1,6 +1,9 @@
 #ifndef __GPIO_H__
 #define __GPIO_H__
 
+#include "rcc.h"
+#include "utils.h"
+
 typedef struct gpio {
 	volatile uint32_t MODER, OTYPER, OSPEEDR, PUPDR, IDR, ODR, BSRR, LCKR, AFR[2];
 } gpio_t;

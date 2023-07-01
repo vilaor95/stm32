@@ -1,9 +1,9 @@
 #include <inttypes.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include <string.h>
 
 #include "utils.h"
-#include "rcc.h"
 #include "gpio.h"
 #include "systick.h"
 #include "timer.h"
@@ -20,18 +20,19 @@ int main(void) {
 
 	for (;;)
 	{
+		static bool led_on_off = true;
+
 		uint32_t t1, p1 = 500;
 		if (timer_expired(&t1, p1, get_systick()))
 		{
-			static bool led_on_off = true;
 			gpio_write(led, led_on_off);
 			led_on_off = !led_on_off;
 		}
 
-		uint32_t t2, p2 = 2000;
+		uint32_t t2, p2 = 1500;
 		if (timer_expired(&t2, p2, get_systick()))
 		{
-			usart_write_buf(USART2, (uint8_t*)"Hi\n\r", 3);
+			printf("LED %d tick %lu\r\n", led_on_off, get_systick());
 		}
 
 	

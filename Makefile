@@ -4,7 +4,7 @@ CFLAGS  ?=  -W -Wall -Wextra -Werror -Wundef -Wshadow -Wdouble-promotion \
             -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 $(EXTRA_CFLAGS)
 LDFLAGS ?= -Tlink.ld -nostartfiles -nostdlib --specs nano.specs -lc -lgcc -Wl,--gc-sections -Wl,-Map=$@.map
 
-SOURCES = main.c startup.c systick.c timer.c
+SOURCES = main.c startup.c systick.c timer.c syscalls.c
 
 ifeq ($(OS),Windows_NT)
   RM = cmd /C del /Q /F
