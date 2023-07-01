@@ -1,6 +1,3 @@
-#include <stddef.h>
-#include <stdbool.h>
-
 #include "usart.h"
 
 enum fd_e {
@@ -13,8 +10,11 @@ int _write(int fd, char* ptr, int len)
 {
 	(void)fd, (void)ptr, (void)len;
 
-	if (fd == FD_OUT) usart_write_buf(USART2, ptr, (size_t)len);
-	return -1;
+	if (fd == FD_OUT || fd == FD_ERR)
+	{
+		usart_write_buf(USART2, ptr, (size_t)len);
+	}
+	return len;
 }
 
 int _read(int fd, char* ptr, int len)

@@ -1,7 +1,6 @@
 #include <inttypes.h>
 #include <stdbool.h>
 #include <stdio.h>
-#include <string.h>
 
 #include "utils.h"
 #include "gpio.h"
@@ -32,10 +31,9 @@ int main(void) {
 		uint32_t t2, p2 = 1500;
 		if (timer_expired(&t2, p2, get_systick()))
 		{
-			printf("LED %d tick %lu\r\n", led_on_off, get_systick());
-		}
 
-	
+			printf("LED status %d tick %lu\r\n", led_on_off, get_systick());
+		}
 	}
 
 	return 0;

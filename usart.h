@@ -2,6 +2,8 @@
 #define __USART_H__
 
 #include <inttypes.h>
+#include <stddef.h>
+#include <stdbool.h>
 
 #include "gpio.h"
 #include "rcc.h"
@@ -50,7 +52,7 @@ static inline uint8_t usart_read_byte(usart_t* usart)
 	return (uint8_t)(usart->DR & 0xFF);
 }
 
-static inline void usart_write_byte(usart_t* usart, char data)
+static inline void usart_write_byte(usart_t* usart, uint8_t data)
 {
 	usart->DR = data;
 	while ((usart->SR & BIT(7)) == 0) (void)0; 
@@ -58,7 +60,7 @@ static inline void usart_write_byte(usart_t* usart, char data)
 
 static inline void usart_write_buf(usart_t *usart, char* buf, size_t len)
 {
-	while(len-- > 0) usart_write_byte(usart, *buf++); 
+	while(len-- > 0) usart_write_byte(usart, *(uint8_t*) buf++); 
 }
 
 #endif
