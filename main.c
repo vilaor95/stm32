@@ -2,6 +2,8 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+#include "stm32f446xx.h"
+
 #include "utils.h"
 #include "gpio.h"
 #include "systick.h"

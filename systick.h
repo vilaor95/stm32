@@ -1,17 +1,13 @@
 #ifndef __SYSTICK_H__
 #define __SYSTICK_H__
 
+#include "stm32f446xx.h"
+
 #include "utils.h"
-#include "rcc.h"
 
 uint32_t get_systick(void);
 
-#define SYSTICK_BASE_ADDRESS (0xE000E010)
-typedef struct systick {
-	volatile uint32_t CTRL, LOAD, VAL, CALIB;
-} systick_t;
-
-#define SYSTICK ((systick_t*)SYSTICK_BASE_ADDRESS)
+#define SYSTICK SysTick
 
 static inline void systick_init(uint32_t ticks)
 {
