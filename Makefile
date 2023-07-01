@@ -14,7 +14,7 @@ endif
 
 build: firmware.bin
 
-firmware.elf: $(SOURCES)
+firmware.elf: $(SOURCES) link.ld Makefile
 	arm-none-eabi-gcc $(SOURCES) $(CFLAGS) $(LDFLAGS) -o $@
 
 firmware.bin: firmware.elf
