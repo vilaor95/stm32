@@ -41,10 +41,21 @@ int _lseek(int fd, int ptr, int dir)
 	return 0;
 }
 
+extern void *_end;
 void* _sbrk(int increment)
 {
-	(void)increment;
-	return NULL;
+	static unsigned char *heap = NULL;
+	unsigned char *prev_heap;
+
+	if (heap == NULL)
+	{
+		heap = (unsigned char*)&_end;
+	}
+	prev_heap = heap;
+
+	heap += increment;
+
+	return prev_heap;
 }
 
 int _isatty(int fd)
