@@ -22,10 +22,13 @@ static inline void usart_init(usart_t* usart, unsigned long baud)
 {
 	uint16_t tx = 0, rx = 0;
 
-	RCC->APB1ENR |= BIT(17);
+	if (usart == USART1) RCC->APB1ENR |= BIT(4);
+	if (usart == USART2) RCC->APB1ENR |= BIT(17);
+	if (usart == USART3) RCC->APB1ENR |= BIT(18);
 
-	tx = PIN('A', 2);
-	rx = PIN('A', 3);
+	if (usart == USART1) tx = PIN('A', 9), rx = PIN('A', 10);
+	if (usart == USART2) tx = PIN('A', 2), rx = PIN('A', 3);
+	if (usart == USART3) tx = PIN('C', 10), rx = PIN('C', 11);
 
 	gpio_set_mode(tx, GPIO_MODE_AF);
 	gpio_set_af(tx, 7);
