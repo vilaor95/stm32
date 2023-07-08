@@ -12,7 +12,10 @@
 
 int main(void) {
 
-	systick_init(HSI_FREQUENCY/1000);
+	SCB->CPACR = (3UL << 22) | (3UL << 20); //Enable the FPU
+
+	clock_init();
+	systick_init(CPU_FREQ/1000);
 
 	uint16_t led = PIN('A', 5);
 	gpio_set_mode(led, GPIO_MODE_OUTPUT);
