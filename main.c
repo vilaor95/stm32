@@ -9,6 +9,7 @@
 #include "systick.h"
 #include "timer.h"
 #include "usart.h"
+#include "watchdog.h"
 
 int main(void) {
 
@@ -17,6 +18,8 @@ int main(void) {
 	clock_init();
 	systick_init(CPU_FREQ/1000);
 
+	wd_start();
+
 	uint16_t led = PIN('A', 5);
 	gpio_set_mode(led, GPIO_MODE_OUTPUT);
 
@@ -24,9 +27,11 @@ int main(void) {
 
 	for (;;)
 	{
-		static bool led_on_off = true;
+		wd_refresh();
+
 
 		uint32_t t1, p1 = 500;
+		static bool led_on_off = true;
 		if (timer_expired(&t1, p1, get_systick()))
 		{
 			gpio_write(led, led_on_off);
